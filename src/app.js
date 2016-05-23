@@ -19,8 +19,6 @@ class Application
     setupEvents() 
     {
         document.getElementById('btnAdd').addEventListener('click', this.btnAddClicked.bind(this));
-       
-       
     }
 
     btnAddClicked() 
@@ -28,18 +26,6 @@ class Application
         let todoText = this.todoText;
         let dateText = this.dateText;
 
-//        if (todoText.length === 0) 
-//        {
-//            this.setRequiredMessage('spanTodoMessage', applicationMessages.fillInMessage);
-//            return;
-//        }
-//
-//        if (dateText.length === 0) 
-//        {
-//            this.setRequiredMessage('spanDateMessage', applicationMessages.fillInMessage);
-//            return;
-//        }
-        
         let todoItem = new TodoItem(todoText, dateText);
         this.store.add(todoItem);
         this.presenter.add(todoItem);
@@ -47,6 +33,9 @@ class Application
         todoText.focus();
         todoText.value = "";
         dateText.value = "";
+        
+        let storeTodo = this.store.findByKey(todo.storeKey);
+        alert(storeTodo.text + "added to the store");
     }    
 
     get todoText() {
