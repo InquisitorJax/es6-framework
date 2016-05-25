@@ -1,4 +1,4 @@
-﻿ class TodoPresenter
+﻿export default class TodoPresenter
 {
     constructor()
     {
@@ -14,13 +14,14 @@
         element.innerHTML =
         `
             <input type="checkbox" id="chbSelection"></input>
-            <span id="spanTodo">${todoItem.todo}</span>
+            <span id="spanTodo">${todoItem.text}</span>
             <span id="spanDate">${todoItem.completeBy}</span>
+            <button id=${todoItem.text} onClick="deleteItem_click(this.id)">Delete</button>
         `;
                
         this.todoList.appendChild(element);
         this.domMap.set(element, todoItem);
-    }
+    }    
 
     remove(element) 
     {

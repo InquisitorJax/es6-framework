@@ -11,19 +11,23 @@
 <script src="./jspm_packages/system.js"></script>
 <script src="./config.js"></script>
 
+
+
+<div >
+    <h3>Add a task</h3>
+    <form id="todo-form">
+        <input type="text" placeholder="Title" id="edtTodo"/>
+        <input type="date"  placeholder="Due Date (dd/mm/yyyy)" id="edtDate"/>
+        <input type="button" value="Add Task" id="btnAdd"/>
+    </form>
+    <divclass="task-list">
+        <ul id="todoList"></ul>
+    </div>
+</div>
+
 <script>
     System.import("./app/app.js");
 </script>
 
-<ul id="todoList"></ul>
-
-<div class="task-list">
-    <h3>Add a task</h3>
-    <form id="todo-form">
-        <input type="text" placeholder="Title" id="edtTodo"/>
-        <input type="datetime"  placeholder="Due Date (dd/mm/yyyy)" id="edtDate"/>
-        <input type="button" value="Add Task" id="btnAdd"/>
-    </form>
-</div>
 </body>
 </html>

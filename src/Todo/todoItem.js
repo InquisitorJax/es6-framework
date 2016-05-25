@@ -1,5 +1,5 @@
 
-class TodoItem 
+export default class TodoItem 
 {
     constructor(text, completeBy) 
     {
@@ -9,7 +9,8 @@ class TodoItem
     }
 
     get storeKey() 
-    {
+    {        
+        const todoStorePrefix = "Todo";
         return todoStorePrefix + this.text;
     }
 

@@ -1,31 +1,38 @@
 ﻿
-class TodoRepo {
-
+export default class TodoRepo 
+{    
+    
+    constructor()
+    {
+    }
+    
     add(todoItem)
     {
-        this.localStorage.setItem(todoItem.storeKey, JSON.stringify(todoItem));
+        window.localStorage.setItem(todoItem.storeKey, JSON.stringify(todoItem));
     }
 
     remove(todoItem) 
     {
-        this.localStorage.removeItem(todoItem.storeKey);
+        window.localStorage.removeItem(todoItem.storeKey);
     }
 
     update(todoItem) 
     {
-        this.localStorage.setItem(todoItem.storeKey, todoItem);
+        window.localStorage.setItem(todoItem.storeKey, todoItem);
     }
 
     findByKey(key) 
     {
-        return JSON.parse(this.localStorage.getItem(key));
+        return JSON.parse(window.localStorage.getItem(key));
     }
 
-    getAll() {
+    getAll() 
+    {
+        const todoStorePrefix = "Todo";
         let items = [];
-        for(let i=0; i < localStorage.length; i++) 
+        for(let i=0; i < window.localStorage.length; i++) 
         {
-            let key = localStorage.key(i);
+            let key = window.localStorage.key(i);
             if (key.startsWith(todoStorePrefix)) {
                 let todoItem = findByKey(key);
                 items.add(todoItem);
@@ -36,6 +43,6 @@ class TodoRepo {
 
     clearAll() 
     {
-        this.localStorage.clear();
+        window.localStorage.clear();
     }
 }

@@ -10,7 +10,7 @@ const applicationMessages = {
 class Application 
 {   
     constructor() 
-    {
+    {        
         this.store = new TodoRepo();
         this.presenter = new TodoPresenter();
         this.setupEvents();
@@ -23,27 +23,35 @@ class Application
 
     btnAddClicked() 
     {
-        let todoText = this.todoText;
-        let dateText = this.dateText;
+        let todoElement = this.todoDomElement;
+        let todoDateElement = this.todoDateDomElement;
+        
+        let todoText = todoElement.value;
+        let dateText = todoDateElement.value;
 
         let todoItem = new TodoItem(todoText, dateText);
-        this.store.add(todoItem);
+        this.store.add(todoItem);        
         this.presenter.add(todoItem);
 
-        todoText.focus();
-        todoText.value = "";
-        dateText.value = "";
         
-        let storeTodo = this.store.findByKey(todo.storeKey);
-        alert(storeTodo.text + "added to the store");
+        todoElement.value = "";
+        todoDateElement.value = "";
+        todoElement.focus();
+                
+        let storeTodo = this.store.findByKey(todoItem.storeKey);        
     }    
 
-    get todoText() {
-        return document.getElementById('edtTodo').value;
+    
+    get todoDomElement()
+    {
+        let todoElement = document.getElementById('edtTodo')
+        return todoElement;
     }
-
-    get dateText() {
-        return document.getElementById('edtDate').value;
+    
+    get todoDateDomElement()
+    {
+        let todoDateElement = document.getElementById('edtDate')
+        return todoDateElement;
     }
     
     run() 
