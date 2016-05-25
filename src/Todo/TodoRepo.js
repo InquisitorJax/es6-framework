@@ -1,9 +1,9 @@
 ﻿
 export default class TodoRepo 
 {    
-    
     constructor()
     {
+        this.todoStorePrefix = "Todo";
     }
     
     add(todoItem)
@@ -25,17 +25,24 @@ export default class TodoRepo
     {
         return JSON.parse(window.localStorage.getItem(key));
     }
+    
+    findByText(text)
+    {
+        let key = this.todoStorePrefix + text;
+        return this.findByKey(key);
+    }
 
     getAll() 
     {
-        const todoStorePrefix = "Todo";
+        
         let items = [];
         for(let i=0; i < window.localStorage.length; i++) 
         {
             let key = window.localStorage.key(i);
-            if (key.startsWith(todoStorePrefix)) {
-                let todoItem = findByKey(key);
-                items.add(todoItem);
+            if (key.startsWith(this.todoStorePrefix)) 
+            {
+                let todoItem = this.findByKey(key);
+                items.push(todoItem);
             }
         }
         return items;

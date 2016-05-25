@@ -15,8 +15,7 @@
         `
             <input type="checkbox" id="chbSelection"></input>
             <span id="spanTodo">${todoItem.text}</span>
-            <span id="spanDate">${todoItem.completeBy}</span>
-            <button id=${todoItem.text} onClick="deleteItem_click(this.id)">Delete</button>
+            <span id="spanDate">${todoItem.completeBy}</span>            
         `;
                
         this.todoList.appendChild(element);

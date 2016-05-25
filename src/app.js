@@ -20,25 +20,40 @@ class Application
     {
         document.getElementById('btnAdd').addEventListener('click', this.btnAddClicked.bind(this));
     }
-
+    
     btnAddClicked() 
     {
         let todoElement = this.todoDomElement;
         let todoDateElement = this.todoDateDomElement;
-        
+
         let todoText = todoElement.value;
         let dateText = todoDateElement.value;
 
         let todoItem = new TodoItem(todoText, dateText);
+        this.AddTodoItem(todoItem);                
+        //let storeTodo = this.store.findByKey(todoItem.storeKey);        
+    }
+    
+    AddTodoItem(todoItem)
+    {
+        let todoElement = this.todoDomElement;
+        let todoDateElement = this.todoDateDomElement;
+
         this.store.add(todoItem);        
         this.presenter.add(todoItem);
 
-        
         todoElement.value = "";
         todoDateElement.value = "";
         todoElement.focus();
-                
-        let storeTodo = this.store.findByKey(todoItem.storeKey);        
+    }
+    
+    loadAllTasks()
+    {
+        let tasks = this.store.getAll();
+        for (let todoItem of tasks) 
+        {
+            this.AddTodoItem(todoItem);                            
+        }
     }    
 
     
@@ -57,6 +72,7 @@ class Application
     run() 
     {
         //insert initialization logic here
+        this.loadAllTasks();
     }
    
 }

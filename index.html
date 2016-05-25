@@ -20,7 +20,16 @@
         <input type="date"  placeholder="Due Date (dd/mm/yyyy)" id="edtDate"/>
         <input type="button" value="Add Task" id="btnAdd"/>
     </form>
-    <divclass="task-list">
+    <div class="filter">               
+        <input type="text" placeholder="Search" id="edtFilter"/>
+        <button id="btnDelete">Search</button>        
+    </div>
+
+    <div class="toolbar">               
+        <button id="btnDelete">Delete Done</button>        
+        <button id="btnDeleteAll">Delete All</button>
+    </div>    
+    <divclass="task-list">        
         <ul id="todoList"></ul>
     </div>
 </div>
