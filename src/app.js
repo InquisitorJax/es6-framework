@@ -1,4 +1,3 @@
-import TodoRepo from './Todo/todoRepo';
 import TodoItem from './Todo/todoItem';
 import TodoPresenter from './Todo/todoPresenter';
 
@@ -10,8 +9,7 @@ const applicationMessages = {
 class Application 
 {   
     constructor() 
-    {        
-        this.store = new TodoRepo();
+    {                         
         this.presenter = new TodoPresenter();
         this.setupEvents();
     }
@@ -19,6 +17,18 @@ class Application
     setupEvents() 
     {
         document.getElementById('btnAdd').addEventListener('click', this.btnAddClicked.bind(this));
+        document.getElementById('btnDelete').addEventListener('click', this.btnDeleteClicked.bind(this));
+        document.getElementById('btnDeleteAll').addEventListener('click', this.btnDeleteAllClicked.bind(this));
+    }
+    
+    btnDeleteAllClicked()
+    {
+        this.presenter.deleteAll();
+    }
+    
+    btnDeleteClicked()
+    {
+        
     }
     
     btnAddClicked() 
@@ -29,17 +39,15 @@ class Application
         let todoText = todoElement.value;
         let dateText = todoDateElement.value;
 
-        let todoItem = new TodoItem(todoText, dateText);
+        let todoItem = new TodoItem(todoText, dateText);        
         this.AddTodoItem(todoItem);                
-        //let storeTodo = this.store.findByKey(todoItem.storeKey);        
     }
     
     AddTodoItem(todoItem)
     {
         let todoElement = this.todoDomElement;
         let todoDateElement = this.todoDateDomElement;
-
-        this.store.add(todoItem);        
+                
         this.presenter.add(todoItem);
 
         todoElement.value = "";
@@ -49,13 +57,8 @@ class Application
     
     loadAllTasks()
     {
-        let tasks = this.store.getAll();
-        for (let todoItem of tasks) 
-        {
-            this.AddTodoItem(todoItem);                            
-        }
+        this.presenter.loadAllTodoItems();
     }    
-
     
     get todoDomElement()
     {
