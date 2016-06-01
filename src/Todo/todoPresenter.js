@@ -11,14 +11,10 @@ export default class TodoPresenter
     
     toggleTodoItemDone(element)
     {
-        console.log("toggle attempt");
-        
         let listElement = element.parentNode;
-        console.log(listElement);
         
         if (this.domMap.has(listElement))
         {
-            console.log("has element");
             let todoItem = this.domMap.get(listElement);
             todoItem.isDone = !todoItem.isDone;
             this.store.update(todoItem);
@@ -38,14 +34,16 @@ export default class TodoPresenter
         let element = document.createElement('li');
         element.className = todoItem.isDone ? 'done' : '';
         
+        let chbChecked = todoItem.isDone ? "checked" : "";
+        
         element.innerHTML =
         `
-            <input type="checkbox" class="todoCheck" ></input>
+            <input type="checkbox" class="todoCheck" ${chbChecked} ></input>
             <span id="spanTodo">${todoItem.text}</span>
             <span id="spanDate">${todoItem.completeBy}</span>                        
         `;
         
-        element.id = todoItem.text;
+        element.id = todoItem.text;        
 
         this.todoList.appendChild(element);
         
@@ -64,7 +62,19 @@ export default class TodoPresenter
             this.store.remove(todoItem);    
         }
     }
-  
+    
+    deleteCompleted()
+    {
+        let todoItems = this.store.getAll();
+        for (let todoItem of todoItems) 
+        {
+            if (todoItem.isDone)
+            {
+                let element =  document.getElementById(todoItem.text);
+                this.remove(element);                
+            }                            
+        }     
+    }
     
     deleteAll()
     {
@@ -77,7 +87,7 @@ export default class TodoPresenter
          });
          //clear the local storage
          this.store.clearAll();
-         this.domMap.deleteAll();
+         this.domMap = new WeakMap();
     }
 
     loadAllTodoItems() 

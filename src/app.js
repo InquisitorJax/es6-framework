@@ -52,7 +52,7 @@ class Application
     
     btnDeleteClicked()
     {
-        
+        this.presenter.deleteCompleted();
     }
     
     btnAddClicked() 
@@ -63,7 +63,7 @@ class Application
         let todoText = todoElement.value;
         let dateText = todoDateElement.value;
 
-        let todoItem = new TodoItem(todoText, dateText, false);        
+        let todoItem = new TodoItem(todoText, dateText);        
         this.AddTodoItem(todoItem);                
     }
     
