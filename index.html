@@ -15,11 +15,13 @@
 
 <div >
     <h3>Add a task</h3>
-    <form id="todo-form">
+    <div class="todo-form">
         <input type="text" placeholder="Title" id="edtTodo"/>
+        <span id="spanTextMessage"></span>
         <input type="date"  placeholder="Due Date (dd/mm/yyyy)" id="edtDate"/>
+        <span id="spanDateMessage"></span>
         <input type="button" value="Add Task" id="btnAdd"/>
-    </form>
+    </div>
     <div class="filter">               
         <input type="text" placeholder="Search" id="edtSearch" />
     </div>
@@ -28,7 +30,7 @@
         <button id="btnDelete">Delete Done</button>        
         <button id="btnDeleteAll">Delete All</button>
     </div>    
-    <divclass="task-list">        
+    <div class="task-list">        
         <ul id="todoList"></ul>
     </div>
 </div>
