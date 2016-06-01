@@ -11,15 +11,20 @@ export default class TodoPresenter
     
     toggleTodoItemDone(element)
     {
-        console.log("event fired");
-        if (this.domMap.has(element))
+        console.log("toggle attempt");
+        
+        let listElement = element.parentNode;
+        console.log(listElement);
+        
+        if (this.domMap.has(listElement))
         {
             console.log("has element");
-            let todoItem = this.domMap.get(element);
-            todoItem.isDone = !todoIt.isDone;
+            let todoItem = this.domMap.get(listElement);
+            todoItem.isDone = !todoItem.isDone;
+            this.store.update(todoItem);
             window.requestAnimationFrame(() => 
             {
-                element.className = todoItem.isDone ? 'done' : '';
+                listElement.className = todoItem.isDone ? 'done' : '';
             });                 
         }
         
@@ -35,12 +40,13 @@ export default class TodoPresenter
         
         element.innerHTML =
         `
-            <input type="checkbox" class="chb" id="${todoItem.text}"></input>
+            <input type="checkbox" class="todoCheck" ></input>
             <span id="spanTodo">${todoItem.text}</span>
             <span id="spanDate">${todoItem.completeBy}</span>                        
         `;
-               
-        element.onclick = this.toggleTodoItemDone(document.getElementById(todoItem.text));
+        
+        element.id = todoItem.text;
+
         this.todoList.appendChild(element);
         
         this.domMap.set(element, todoItem);
@@ -48,7 +54,8 @@ export default class TodoPresenter
 
     remove(element) 
     {
-        if (this.domMap.has(element)) {
+        if (this.domMap.has(element)) 
+        {
             let todoItem = this.domMap.get(element);
 
             this.domMap.delete(element);            
@@ -57,26 +64,29 @@ export default class TodoPresenter
             this.store.remove(todoItem);    
         }
     }
-    
-    delete(element)
-    {
-        let todoTask = this.domMap.get(element);
-        
-        this.todoList.removeChild(element);
-        this.store.remove(todoTask);        
-    }
+  
     
     deleteAll()
     {
-        let elements = this.todoList.children;
-        
-        for (let todoElement of elements) 
-        {
-            this.delete(todoElement);                           
-        }      
+        //delete all dom elements
+         window.requestAnimationFrame(() => {
+            while(this.todoList.firstChild) 
+            {
+                this.todoList.removeChild(this.todoList.firstChild);
+            }
+         });
+         //clear the local storage
+         this.store.clearAll();
+         this.domMap.deleteAll();
     }
 
     loadAllTodoItems() 
+    {
+        let tasks = this.store.getAll();
+        this.showItems(tasks);
+    }    
+    
+    showItems(todoItems)
     {
         window.requestAnimationFrame(() => {
             while(this.todoList.firstChild) 
@@ -84,16 +94,23 @@ export default class TodoPresenter
                 this.todoList.removeChild(this.todoList.firstChild);
             }
             
-            let tasks = this.store.getAll();
-            for (let todoItem of tasks) 
+            for (let todoItem of todoItems) 
             {
                 this.add(todoItem);                            
             }            
         });
-    }    
+    }
     
+     
     filter(filterText)
     {
-        
+        let allItems = this.store.getAll();
+        let filteredItems = allItems.filter(function (todoItem) {
+            let todoText = todoItem.text.toLowerCase();
+            return todoText.indexOf(filterText.toLowerCase()) > -1;
+        } );
+        this.showItems(filteredItems);        
     }
+    
+  
 }

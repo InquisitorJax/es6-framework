@@ -1,11 +1,11 @@
 
 export default class TodoItem 
 {
-    constructor(text, completeBy) 
+    constructor(text, completeBy, isDone) 
     {
         this.text = text;
         this.completeBy = completeBy;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     get storeKey() 

@@ -13,12 +13,13 @@ export default class TodoRepo
 
     remove(todoItem) 
     {
-        window.localStorage.removeItem(todoItem.storeKey);
+        delete window.localStorage[todoItem.storeKey];
     }
 
     update(todoItem) 
-    {
-        window.localStorage.setItem(todoItem.storeKey, todoItem);
+    {     
+        //this.remove(todoItem);   //does not work - item remains in local storage
+        this.add(todoItem);        
     }
 
     findByKey(key) 

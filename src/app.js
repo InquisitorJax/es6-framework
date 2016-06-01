@@ -19,6 +19,30 @@ class Application
         document.getElementById('btnAdd').addEventListener('click', this.btnAddClicked.bind(this));
         document.getElementById('btnDelete').addEventListener('click', this.btnDeleteClicked.bind(this));
         document.getElementById('btnDeleteAll').addEventListener('click', this.btnDeleteAllClicked.bind(this));
+        document.getElementById('edtSearch').addEventListener('keyup', this.edtSearchTextChanged.bind(this));
+        document.addEventListener('change', this.listItemCheckEvent.bind(this), false); //add a change event for dynamically generated html items
+    }
+            
+    listItemCheckEvent(e)
+    {
+        if (this.hasClass(e.target, 'todoCheck')) 
+        {
+            this.presenter.toggleTodoItemDone(e.target);
+        }   
+    }
+    
+     hasClass(elem, className) 
+     {
+        return elem.className.split(' ').indexOf(className) > -1;
+     }
+    
+    edtSearchTextChanged()
+    {
+        console.log("OnChange");
+        let searchElement = this.searchDomElelment;
+        let searchText = searchElement.value;
+        
+        this.presenter.filter(searchText);
     }
     
     btnDeleteAllClicked()
@@ -39,7 +63,7 @@ class Application
         let todoText = todoElement.value;
         let dateText = todoDateElement.value;
 
-        let todoItem = new TodoItem(todoText, dateText);        
+        let todoItem = new TodoItem(todoText, dateText, false);        
         this.AddTodoItem(todoItem);                
     }
     
@@ -70,6 +94,12 @@ class Application
     {
         let todoDateElement = document.getElementById('edtDate')
         return todoDateElement;
+    }
+    
+    get searchDomElelment()
+    {
+        let searchElement = document.getElementById('edtSearch');
+        return searchElement;
     }
     
     run() 
