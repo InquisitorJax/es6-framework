@@ -1,11 +1,6 @@
 import TodoItem from './Todo/todoItem';
 import TodoPresenter from './Todo/todoPresenter';
 
-const applicationMessages = {
-    fillInMessage: 'please fill in this field',
-    required: '* required'
-};
-
 class Application 
 {   
     constructor() 
